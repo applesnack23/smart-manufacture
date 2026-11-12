@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>컨베이어 운전 화면</title>
+  <style>
+    body   { font-family: sans-serif; font-size: 22px; margin: 20px; }
+    .box   { border: 2px solid #999; border-radius: 8px; padding: 10px; margin: 8px 0; width: 400px; }
+    .on    { background: #2e7d32; color: white; }
+    button { font-size: 22px; padding: 8px 20px; }
+  </style>
+</head>
+<body>
+  <h1>컨베이어 운전 화면</h1>
+  <div class="box">상태: <b id="mode">-</b> · 왕복 <b id="count">0</b> 회</div>
+  <div class="box" id="sa">센서 A</div>
+  <div class="box" id="sb">센서 B</div>
+  <button onclick="fetch('/start')">시작</button>
+  <button onclick="fetch('/stop')">정지</button>
+  <script>
+    async function update() {
+      const s = await (await fetch('/status')).json();
+      document.getElementById('mode').textContent = s.mode;
+      document.getElementById('count').textContent = s.count;
+      document.getElementById('sa').className = s.a ? 'box on' : 'box';
+      document.getElementById('sb').className = s.b ? 'box on' : 'box';
+    }
+    setInterval(update, 500);
+  </script>
+</body>
+</html>

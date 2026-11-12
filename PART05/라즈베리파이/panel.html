@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>컨베이어</title>
+  <style>
+    body { font-family: sans-serif; font-size: 22px; }
+    h1   { color: #1e50a0; }
+    .lamp { display: inline-block; width: 150px; padding: 12px;
+            text-align: center; border: 2px solid #999;
+            border-radius: 30px; background: #eee; }
+    .on   { background: #2e7d32; color: white; }
+    button { font-size: 22px; padding: 8px 18px; }
+    button:hover { background: orange; }
+  </style>
+</head>
+<body>
+  <h1>컨베이어 상태</h1>
+  <div>
+    <span class="lamp" id="a">센서 A</span>
+    <span class="lamp" id="b">센서 B</span>
+    <span class="lamp" id="right">RIGHT</span>
+  </div>
+  <p>
+    <button onclick="run(true)">정방향</button>
+    <button onclick="run(false)">정지</button>
+  </p>
+  <p id="msg">대기 중</p>
+  <script>
+    function run(on) {                     // on = true 또는 false
+      if (on) {
+        document.getElementById('msg').textContent = '정방향 운전';
+      } else {
+        document.getElementById('msg').textContent = '정지';
+      }
+      document.getElementById('right').className = on ? 'lamp on' : 'lamp';
+    }
+    let s = {a: 1, b: 0};                  // 가짜 센서 상태 (객체)
+    function update() {
+      s.a = 1 - s.a;                       // 1 초마다 0 <-> 1 뒤집기
+      s.b = 1 - s.b;
+      for (const id of ['a', 'b'])
+        document.getElementById(id).className = s[id] ? 'lamp on' : 'lamp';
+    }
+    setInterval(update, 1000);             // 1000 ms = 1 초마다
+  </script>
+</body>
+</html>

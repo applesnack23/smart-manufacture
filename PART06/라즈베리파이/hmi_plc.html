@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>컨베이어 HMI (OpenPLC)</title>
+  <style>
+    body  { font-family: sans-serif; font-size: 22px; margin: 20px; }
+    .lamp { display: inline-block; width: 150px; padding: 12px;
+            margin: 4px; text-align: center; border: 2px solid #999;
+            border-radius: 30px; background: #eee; }
+    .on   { background: #2e7d32; color: white; }
+    .auto { background: #1565c0; color: white; }
+    .alarm { background: #c62828; color: white; }
+    button { font-size: 22px; padding: 8px 18px; margin: 4px; }
+  </style>
+</head>
+<body>
+  <h1>컨베이어 HMI — OpenPLC</h1>
+  <div>
+    <span class="lamp" id="auto">MANUAL</span>
+    <span class="lamp" id="alarm">알람</span>
+  </div>
+  <div>
+    <span class="lamp" id="a">센서 A</span>
+    <span class="lamp" id="b">센서 B</span>
+  </div>
+  <div>
+    <span class="lamp" id="right">MOVE_RIGHT</span>
+    <span class="lamp" id="left">MOVE_LEFT</span>
+  </div>
+  <p>
+    <button onclick="fetch('/auto')">AUTO</button>
+    <button onclick="fetch('/manual')">MANUAL</button>
+    <button onclick="fetch('/arst')">알람 리셋</button>
+  </p>
+  <p>수동:
+    <button onclick="fetch('/rev')">역방향</button>
+    <button onclick="fetch('/stop')">정지</button>
+    <button onclick="fetch('/fwd')">정방향</button>
+  </p>
+  <script>
+    function lamp(id, on, cls) {             // 켜지면 'lamp ' + cls
+      document.getElementById(id).className = on ? 'lamp ' + cls : 'lamp';
+    }
+    async function update() {
+      const r = await fetch('/status');      // 서버에 /status 요청
+      const s = await r.json();              // JSON 글자 -> 객체
+      lamp('auto', s.auto, 'auto');
+      const m = document.getElementById('auto');
+      m.textContent = s.auto ? 'AUTO' : 'MANUAL';
+      lamp('alarm', s.alarm, 'alarm');
+      for (const id of ['a', 'b', 'right', 'left']) lamp(id, s[id], 'on');
+    }
+    setInterval(update, 500);              // 0.5 초마다 update()
+  </script>
+</body>
+</html>
