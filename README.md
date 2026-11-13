@@ -11,6 +11,7 @@
 | `PART05` Python | `C:\PART05` (`ex_*.py`, `web\panel.html`, `연습\`) | `\\192.168.7.1\projects\PART05` (`p01 ~ p04`, `cycle_*`, `RaspberryPi_cycle.py`, `panel.html`) |
 | `PART06` OpenPLC | `C:\PART06` (`.st` 는 OpenPLC Editor 에서 열기, `ex_*.py`, `web\panel.html`) | `\\192.168.7.1\projects\PART06` (`web_server.py`, `hmi_view`, `hmi_plc`) |
 | `PART07` Physical AI | `C:\PART07` (디지털 트윈 · 지도 · 모방 · 강화학습), `예시표` (학습 결과 예시 JSON) | `\\192.168.7.1\projects\PART07` (`ai_run_gpio.py 표파일.json`) |
+| `APPENDIX` 배포 이미지 | 라즈베리파이 OS 이미지 링크 (https://vo.la/ZUvFmAM) · 굽는 법 · 접속 방법 (로그인 이름 `twiniex`) | — |
 
 ## 받기
 - 초록색 **Code** 단추 → **Download ZIP** → 압축 풀기
